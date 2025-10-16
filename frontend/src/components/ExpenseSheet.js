@@ -13,7 +13,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'];
-const CATEGORIES = ['Food', 'Transport', 'Entertainment', 'Shopping', 'Bills', 'Healthcare', 'Education', 'Other'];
+const CATEGORIES = [
+  'Salary & Income',
+  'Rent/EMI',
+  'Loans & Debts',
+  'Savings',
+  'Stocks/SIP/Investments',
+  'Food & Groceries',
+  'Transport & Fuel',
+  'Utilities & Bills',
+  'Healthcare',
+  'Education',
+  'Entertainment',
+  'Shopping & Personal',
+  'Insurance',
+  'Other'
+];
 
 const ExpenseSheet = ({ sheets, onDeleteSheet }) => {
   const { sheetId } = useParams();
