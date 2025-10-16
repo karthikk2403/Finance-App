@@ -71,12 +71,18 @@ class ExpenseItem(BaseModel):
     description: str
     amount: float
 
+class Budget(BaseModel):
+    category: str
+    allocated: float
+
 class ExpenseSheet(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str
     name: str
     month: str  # Format: YYYY-MM
+    monthly_salary: float = 0.0
+    budgets: List[Budget] = []
     expenses: List[ExpenseItem] = []
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -84,6 +90,8 @@ class ExpenseSheet(BaseModel):
 class ExpenseSheetCreate(BaseModel):
     name: str
     month: str
+    monthly_salary: float
+    budgets: List[Budget] = []
 
 class ExpenseItemCreate(BaseModel):
     date: str
