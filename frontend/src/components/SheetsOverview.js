@@ -45,6 +45,9 @@ const SheetsOverview = ({ sheets, onCreateSheet }) => {
           <DialogContent data-testid="create-sheet-dialog">
             <DialogHeader>
               <DialogTitle>Create New Expense Sheet</DialogTitle>
+              <DialogDescription>
+                Add a new monthly expense sheet to track your spending
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 mt-4">
               <div className="space-y-2">
