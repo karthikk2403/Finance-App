@@ -329,6 +329,9 @@ const ExpenseSheet = ({ sheets, onDeleteSheet }) => {
             <DialogContent data-testid="add-expense-dialog">
               <DialogHeader>
                 <DialogTitle>Add New Expense</DialogTitle>
+                <DialogDescription>
+                  Fill in the details of your expense transaction
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 mt-4">
                 <div className="space-y-2">
