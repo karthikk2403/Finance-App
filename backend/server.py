@@ -352,10 +352,31 @@ async def get_stats(sheet_id: str, current_user: User = Depends(get_current_user
         category = expense['category']
         by_category[category] = by_category.get(category, 0) + expense['amount']
     
+    # Calculate budget info
+    budgets = sheet.get('budgets', [])
+    total_budget = sum(b['allocated'] for b in budgets)
+    
+    # Find overspent categories
+    overspent_categories = []
+    for budget in budgets:
+        spent = by_category.get(budget['category'], 0)
+        if spent > budget['allocated']:
+            overspent_categories.append({
+                'category': budget['category'],
+                'budget': budget['allocated'],
+                'spent': spent,
+                'overspent': spent - budget['allocated']
+            })
+    
+    remaining_budget = sheet.get('monthly_salary', 0) - total
+    
     return ExpenseStats(
         total=total,
         by_category=by_category,
-        count=len(expenses)
+        count=len(expenses),
+        remaining_budget=remaining_budget,
+        total_budget=total_budget,
+        overspent_categories=overspent_categories
     )
 
 # Comparison endpoint
