@@ -103,6 +103,9 @@ class ExpenseStats(BaseModel):
     total: float
     by_category: dict
     count: int
+    remaining_budget: float
+    total_budget: float
+    overspent_categories: list
 
 class ComparisonData(BaseModel):
     sheet1: ExpenseSheet
