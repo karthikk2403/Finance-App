@@ -226,7 +226,7 @@ const ExpenseSheet = ({ sheets, onDeleteSheet }) => {
       </div>
 
       {/* Charts */}
-      {stats && stats.count > 0 && (
+      {stats && stats.count > 0 && pieData.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -238,25 +238,28 @@ const ExpenseSheet = ({ sheets, onDeleteSheet }) => {
               <PieChartIcon className="w-5 h-5 mr-2 text-blue-600" />
               Expense Distribution
             </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+            <div style={{ width: '100%', height: '300px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                    animationDuration={800}
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </motion.div>
 
           <motion.div
@@ -269,15 +272,17 @@ const ExpenseSheet = ({ sheets, onDeleteSheet }) => {
               <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
               By Category
             </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="value" fill="#3b82f6" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <div style={{ width: '100%', height: '300px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={barData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#3b82f6" radius={[8, 8, 0, 0]} animationDuration={800} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </motion.div>
 
           {lineData.length > 1 && (
@@ -288,16 +293,18 @@ const ExpenseSheet = ({ sheets, onDeleteSheet }) => {
               className="glass-effect rounded-xl p-6 chart-container lg:col-span-2"
             >
               <h3 className="text-xl font-semibold text-gray-800 mb-4">Daily Spending Trend</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={lineData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="amount" stroke="#3b82f6" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
+              <div style={{ width: '100%', height: '300px' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={lineData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="amount" stroke="#3b82f6" strokeWidth={2} animationDuration={800} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </motion.div>
           )}
         </div>
