@@ -1,23 +1,53 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Calendar, FileText, Trash2 } from 'lucide-react';
+import { Plus, Calendar, FileText, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { useNavigate } from 'react-router-dom';
 
+const DEFAULT_CATEGORIES = [
+  { name: 'Rent/EMI', suggested: 30 },
+  { name: 'Food & Groceries', suggested: 20 },
+  { name: 'Transport & Fuel', suggested: 10 },
+  { name: 'Utilities & Bills', suggested: 8 },
+  { name: 'Loans & Debts', suggested: 10 },
+  { name: 'Savings', suggested: 15 },
+  { name: 'Stocks/SIP/Investments', suggested: 10 },
+  { name: 'Healthcare', suggested: 5 },
+  { name: 'Entertainment', suggested: 5 },
+  { name: 'Shopping & Personal', suggested: 5 },
+  { name: 'Insurance', suggested: 5 },
+  { name: 'Other', suggested: 5 }
+];
+
 const SheetsOverview = ({ sheets, onCreateSheet }) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [month, setMonth] = useState('');
+  const [salary, setSalary] = useState('');
+  const [budgets, setBudgets] = useState(
+    DEFAULT_CATEGORIES.map(cat => ({ category: cat.name, allocated: 0 }))
+  );
   const navigate = useNavigate();
 
+  const calculateBudget = () => {
+    const salaryAmount = parseFloat(salary) || 0;
+    const newBudgets = DEFAULT_CATEGORIES.map(cat => ({
+      category: cat.name,
+      allocated: Math.round((salaryAmount * cat.suggested) / 100)
+    }));
+    setBudgets(newBudgets);
+  };
+
   const handleCreate = () => {
-    if (name && month) {
-      onCreateSheet(name, month);
+    if (name && month && salary) {
+      onCreateSheet(name, month, parseFloat(salary), budgets);
       setName('');
       setMonth('');
+      setSalary('');
+      setBudgets(DEFAULT_CATEGORIES.map(cat => ({ category: cat.name, allocated: 0 })));
       setOpen(false);
     }
   };
